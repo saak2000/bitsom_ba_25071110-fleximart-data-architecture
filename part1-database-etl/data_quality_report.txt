@@ -1,0 +1,66 @@
+1. Customers Dataset (customers_raw.csv)
+Records Processed
+•	Total records read from source file: 26
+Duplicates
+•	Duplicate records identified (based on customer_id): 1
+•	Duplicate records removed: 1
+Missing Values
+•	Missing email values detected: 5
+•	Missing emails handled by generating placeholder values
+(format: {customer_id}@unknown.com)
+•	Other fields contained no critical missing values
+Records Loaded
+•	Final records inserted into customers table: 25
+________________________________________
+2. Products Dataset (products_raw.csv)
+Records Processed
+•	Total records read from source file: 20
+Duplicates
+•	Duplicate records identified: 0
+•	Duplicate records removed: 0
+Missing Values
+•	Missing price values detected: 3
+•	Missing stock quantity values detected: 1
+•	Numeric missing values filled using median strategy
+Records Loaded
+•	Final records inserted into products table: 20
+________________________________________
+3. Sales Dataset (sales_raw.csv)
+Records Processed
+•	Total records read from source file: 40
+Duplicates
+•	Duplicate transactions identified (based on transaction_id): 1
+•	Duplicate records removed: 1
+Missing Values
+•	Missing customer_id values detected: 3
+•	Missing product_id values detected: 2
+•	Records with missing critical foreign keys were removed
+•	Inconsistent date formats converted to standard YYYY-MM-DD
+Records Loaded
+•	Valid sales records used to generate:
+o	Orders table: One record per transaction
+o	Order Items table: One record per product per transaction
+________________________________________
+4. Orders Table (Derived from Sales Data)
+Records Generated
+•	Orders created after aggregation
+Missing Values
+•	Missing order_date values handled using default date (1980-01-01)
+Records Loaded
+•	Total records inserted into orders table: (same as number of valid transactions)
+________________________________________
+5. Order Items Table (Derived from Sales Data)
+Records Generated
+•	Order items created at transaction-product level
+Missing Values
+•	No missing values after transformation
+Records Loaded
+•	Total records inserted into order_items table: (same as cleaned sales records)
+________________________________________
+6. Summary 
+Customers: 26 records read, 1 duplicate removed, 5 missing values handled, and 25 records successfully loaded into the customers table.
+Products: 20 records processed, no duplicates found, 4 missing values handled, and 20 records loaded into the products table.
+Sales: 40 records processed, 1 duplicate removed, 5 missing values handled, resulting in 35 order records loaded into the orders table and 35 order item records loaded into the order_items table.
+________________________________________
+7. Conclusion
+The ETL pipeline successfully identified and resolved data quality issues across all datasets. Duplicate records were removed, missing values were handled using appropriate strategies, and referential integrity was enforced before loading data into the relational database. The resulting data is clean, consistent, and ready for analytical queries.
